@@ -1,4 +1,5 @@
 import React from 'react';
+import { playStrum } from './TonePlayer';
 
 const GuitarChord = ({ name, positions }) => {
   if (!positions) return <div style={{width: 200, height: 250, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>Sem Posição</div>;
@@ -31,8 +32,19 @@ const GuitarChord = ({ name, positions }) => {
   const stringSpacing = neckWidth / 5;
   const fretSpacing = neckHeight / numFretsToDraw;
 
+  const handlePlay = () => {
+    playStrum(positions);
+  };
+
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    <div 
+      style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer', position: 'relative' }} 
+      onClick={handlePlay}
+      title="Clique para ouvir o acorde"
+    >
+      <div style={{ position: 'absolute', top: -10, right: 0, fontSize: '0.8rem', background: 'var(--text-primary)', color: 'white', padding: '2px 6px', borderRadius: '4px', opacity: 0.8 }}>
+        ▶ Ouvir
+      </div>
       <h2 style={{ fontSize: '2rem', marginBottom: '1rem', color: 'var(--text-primary)' }}>{name}</h2>
       <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`}>
         {/* Draw Nut or Fret number */}
