@@ -29,26 +29,27 @@ services:
   # Descomente e ajuste quando tiver o código deles pronto
   # =======================================================
 
-  # lume-maps-frontend:
-  #   build:
-  #     context: ./apps/v-maps/client
-  #   restart: unless-stopped
-  #   networks:
-  #     - lume-network
+  lume-maps-frontend:
+    build:
+      context: ./apps/v-maps/client
+    restart: unless-stopped
+    networks:
+      - lume-network
 
-  # lume-hair-frontend:
-  #   build:
-  #     context: ./apps/v-hair/client
-  #   restart: unless-stopped
-  #   networks:
-  #     - lume-network
+  lume-hair-frontend:
+    build:
+      context: ./apps/v-hair/client
+    restart: unless-stopped
+    networks:
+      - lume-network
 
-  # lume-cad-frontend:
-  #   build:
-  #     context: ./apps/NeuralCAD-Architec
-  #   restart: unless-stopped
-  #   networks:
-  #     - lume-network
+  lume-cad-frontend:
+    build:
+      context: ./apps/NeuralCAD-Architec
+    restart: unless-stopped
+    networks:
+      - lume-network
+
 
 networks:
   lume-network:
