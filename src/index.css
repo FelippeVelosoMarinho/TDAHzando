@@ -1,0 +1,236 @@
+:root {
+    --bg-color: #fdfbf7;
+    --text-primary: #334155;
+    --text-secondary: #64748b;
+    --accent-primary: #fbcfe8; /* pastel pink */
+    --accent-secondary: #bae6fd; /* pastel blue */
+    --accent-tertiary: #bbf7d0; /* pastel green */
+    --card-bg: #ffffff;
+    --card-border: #e2e8f0;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* Remove blobs */
+.background-elements {
+    display: none;
+}
+
+/* App Container */
+.app-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+/* Header */
+header {
+    text-align: center;
+    padding: 3rem 0 1rem;
+}
+
+h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+}
+
+header p {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+header strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+/* Input Section */
+.input-section {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+#idea-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+#idea-input {
+    width: 100%;
+    padding: 1.2rem 1.5rem;
+    padding-right: 4rem;
+    font-size: 1.1rem;
+    font-family: inherit;
+    background: var(--card-bg);
+    border: 2px solid var(--card-border);
+    border-radius: 12px;
+    color: var(--text-primary);
+    transition: all 0.2s ease;
+}
+
+#idea-input:focus {
+    outline: none;
+    border-color: #94a3b8;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.submit-btn {
+    position: absolute;
+    right: 0.8rem;
+    background: var(--text-primary);
+    border: none;
+    border-radius: 8px;
+    width: 2.8rem;
+    height: 2.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    cursor: pointer;
+    transition: transform 0.1s ease;
+}
+
+.submit-btn:active {
+    transform: scale(0.95);
+}
+
+/* Tags */
+.tags-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.tag-radio input {
+    display: none;
+}
+
+.tag {
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    background: var(--card-bg);
+    border: 2px solid var(--card-border);
+    color: var(--text-secondary);
+    transition: all 0.2s ease;
+}
+
+.tag-radio input:checked + .tag-hyperfocus {
+    background: var(--accent-tertiary);
+    border-color: var(--accent-tertiary);
+    color: #166534;
+}
+
+.tag-radio input:checked + .tag-genius {
+    background: var(--accent-secondary);
+    border-color: var(--accent-secondary);
+    color: #075985;
+}
+
+.tag-radio input:checked + .tag-bored {
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
+    color: #9d174d;
+}
+
+/* Grid */
+.ideas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    padding-bottom: 4rem;
+}
+
+.idea-card {
+    background: var(--card-bg);
+    border: 2px solid var(--card-border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: transform 0.2s ease;
+    position: relative;
+}
+
+.idea-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.idea-card::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    width: calc(100% + 4px);
+    height: 6px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+.idea-card.hyperfocus::before { background: var(--accent-tertiary); }
+.idea-card.genius::before { background: var(--accent-secondary); }
+.idea-card.bored::before { background: var(--accent-primary); }
+
+.idea-content {
+    font-size: 1.1rem;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+    margin-top: 0.5rem;
+}
+
+.idea-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.idea-tag {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.delete-btn {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 8px;
+}
+
+.delete-btn:hover {
+    color: #ef4444;
+    background: #fee2e2;
+}
