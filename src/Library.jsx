@@ -7,7 +7,7 @@ const Library = ({ onSelectSong }) => {
 
   const fetchSongs = async () => {
     try {
-      const res = await fetch('http://localhost:3001/api/songs');
+      const res = await fetch('/api/songs');
       if (res.ok) {
         const data = await res.json();
         setSongs(data);
@@ -28,7 +28,7 @@ const Library = ({ onSelectSong }) => {
     if (!window.confirm('Tem certeza que deseja apagar esta música?')) return;
     
     try {
-      await fetch(`http://localhost:3001/api/songs/${id}`, { method: 'DELETE' });
+      await fetch(`/api/songs/${id}`, { method: 'DELETE' });
       fetchSongs();
     } catch (err) {
       console.error(err);

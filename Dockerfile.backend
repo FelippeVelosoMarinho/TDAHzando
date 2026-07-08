@@ -1,0 +1,12 @@
+FROM node:18-alpine
+WORKDIR /app
+
+# O backend precisa apenas das dependências root do package.json (ou poderiamos separar)
+COPY package*.json ./
+RUN npm install --production
+
+# Copia a pasta backend
+COPY backend/ ./backend/
+
+EXPOSE 3001
+CMD ["node", "backend/server.cjs"]

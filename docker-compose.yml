@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  lume-chaos-frontend:
+    build: 
+      context: .
+      dockerfile: Dockerfile.frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - lume-chaos-backend
+    restart: unless-stopped
+    networks:
+      - lume-network
+
+  lume-chaos-backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    volumes:
+      - ./backend/data:/app/backend/data
+      - ./backend/uploads:/app/backend/uploads
+    restart: unless-stopped
+    networks:
+      - lume-network
+
+  # =======================================================
+  # Templates para os outros containers do ecossistema
+  # Descomente e ajuste quando tiver o código deles pronto
+  # =======================================================
+
+  # lume-maps-frontend:
+  #   build:
+  #     context: ./apps/v-maps/client
+  #   restart: unless-stopped
+  #   networks:
+  #     - lume-network
+
+  # lume-hair-frontend:
+  #   build:
+  #     context: ./apps/v-hair/client
+  #   restart: unless-stopped
+  #   networks:
+  #     - lume-network
+
+  # lume-cad-frontend:
+  #   build:
+  #     context: ./apps/NeuralCAD-Architec
+  #   restart: unless-stopped
+  #   networks:
+  #     - lume-network
+
+networks:
+  lume-network:
+    driver: bridge

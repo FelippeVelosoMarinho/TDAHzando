@@ -1,64 +1,63 @@
 import React, { useState } from 'react';
 import TDAHzandoHub from './TDAHzandoHub';
-import ChordViewer from './ChordViewer';
-import AddSongForm from './AddSongForm';
-import Library from './Library';
+import LumeChordsApp from './LumeChordsApp';
+import { FiLayers, FiMap } from 'react-icons/fi';
+import { FaGuitar, FaDraftingCompass } from 'react-icons/fa';
+import { GiScissors } from 'react-icons/gi';
 
 function App() {
-  const [currentView, setCurrentView] = useState('hub');
-  const [songData, setSongData] = useState(null);
-  const [viewMode, setViewMode] = useState('sync');
+  const [currentApp, setCurrentApp] = useState('hub');
 
-  const handleSelectSong = (parsedSong) => {
-    setSongData(parsedSong);
-    setCurrentView('viewer');
+  const apps = {
+    'hub': { name: 'Lume Chaos', icon: <FiLayers />, type: 'internal' },
+    'chords': { name: 'Lume Chords', icon: <FaGuitar />, type: 'internal' },
+    'maps': { name: 'Lume Maps', icon: <FiMap />, type: 'iframe', url: 'http://localhost:5174' },
+    'hair': { name: 'Lume Hair', icon: <GiScissors />, type: 'iframe', url: 'http://localhost:5175' },
+    'cad': { name: 'Lume Cad', icon: <FaDraftingCompass />, type: 'iframe', url: 'http://localhost:5176' }
   };
 
+  const activeApp = apps[currentApp];
+
   return (
-    <>
-      <nav style={{ padding: '1rem 2rem', display: 'flex', gap: '1rem', background: 'var(--card-bg)', borderBottom: '2px solid var(--card-border)', position: 'sticky', top: 0, zIndex: 100, alignItems: 'center' }}>
-        <button onClick={() => setCurrentView('hub')} style={navBtnStyle(currentView === 'hub')}>Hub</button>
-        <button onClick={() => setCurrentView('library')} style={navBtnStyle(currentView === 'library')}>Minhas Músicas</button>
-        <button onClick={() => setCurrentView('add')} style={navBtnStyle(currentView === 'add')}>Adicionar Música</button>
-        
-        {songData && (
-          <>
-            <div style={{ width: '2px', height: '30px', background: 'var(--card-border)', margin: '0 1rem' }} />
-            <button onClick={() => setCurrentView('viewer')} style={navBtnStyle(currentView === 'viewer')}>Visualizando: {songData.title}</button>
-            <select value={viewMode} onChange={(e) => setViewMode(e.target.value)} style={{ padding: '0.5rem', borderRadius: '8px', background: 'var(--bg-color)', color: 'var(--text-primary)', border: '2px solid var(--card-border)', marginLeft: 'auto' }}>
-              <option value="sync">Modo Timeline (Avançar)</option>
-              <option value="survival">Modo Kit Sobrevivência</option>
-            </select>
-          </>
-        )}
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', overflow: 'hidden' }}>
+      {/* Topbar: O Navegador Central do Ecossistema */}
+      <nav style={{ padding: '1rem 2rem', display: 'flex', gap: '1rem', background: 'var(--card-bg)', borderBottom: '2px solid var(--card-border)', zIndex: 100, alignItems: 'center', flexShrink: 0 }}>
+        {Object.entries(apps).map(([key, app]) => (
+          <button 
+            key={key} 
+            onClick={() => setCurrentApp(key)} 
+            style={navBtnStyle(currentApp === key)}
+          >
+            <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              {app.icon} {app.name}
+            </span>
+          </button>
+        ))}
       </nav>
 
-      <main style={{ padding: '2rem', maxWidth: '1200px', margin: '0 auto' }}>
-        {currentView === 'hub' && <TDAHzandoHub />}
+      {/* Área de Renderização da Aplicação Ativa */}
+      <div style={{ flex: 1, width: '100%', overflowY: 'auto' }}>
+        {activeApp.type === 'internal' && currentApp === 'hub' && (
+          <div style={{ padding: '2rem', maxWidth: '1200px', margin: '0 auto' }}>
+            <TDAHzandoHub onAppSelect={(id) => setCurrentApp(id)} />
+          </div>
+        )}
         
-        {currentView === 'library' && (
-          <div>
-            <h2 style={{ marginBottom: '2rem', color: 'var(--text-primary)' }}>Minha Biblioteca de Cifras</h2>
-            <Library onSelectSong={handleSelectSong} />
-          </div>
+        {activeApp.type === 'internal' && currentApp === 'chords' && (
+          <LumeChordsApp />
         )}
-
-        {currentView === 'add' && (
-          <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-            <AddSongForm onSongAdded={() => setCurrentView('library')} />
-          </div>
+        
+        {activeApp.type === 'iframe' && (
+          <iframe 
+            src={activeApp.url} 
+            title={activeApp.name}
+            style={{ width: '100%', height: '100%', border: 'none', background: 'white' }}
+          />
         )}
-
-        {currentView === 'viewer' && songData && (
-          <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
-            <ChordViewer songData={songData} language="PT" mode={viewMode} />
-          </div>
-        )}
-      </main>
-    </>
+      </div>
+    </div>
   );
 }
-
 
 const navBtnStyle = (active) => ({
   background: active ? 'var(--text-primary)' : 'transparent',

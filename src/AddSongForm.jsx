@@ -30,7 +30,7 @@ const AddSongForm = ({ onSongAdded }) => {
 
   const postData = async (formData) => {
     try {
-      const res = await fetch('http://localhost:3001/api/songs', {
+      const res = await fetch('/api/songs', {
         method: 'POST',
         body: formData,
       });
