@@ -1,63 +1,51 @@
 import React, { useState } from 'react';
 import TDAHzandoHub from './TDAHzandoHub';
 import ChordViewer from './ChordViewer';
-import { parseChordsFile } from './chordsParser';
+import AddSongForm from './AddSongForm';
+import Library from './Library';
 
 function App() {
   const [currentView, setCurrentView] = useState('hub');
   const [songData, setSongData] = useState(null);
   const [viewMode, setViewMode] = useState('sync');
 
-  const handleFileUpload = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const text = e.target.result;
-        const parsed = parseChordsFile(text, { title: file.name.replace('.txt', '') });
-        setSongData(parsed);
-        setCurrentView('viewer'); // Pula direto para o visualizador
-      };
-      reader.readAsText(file);
-    }
+  const handleSelectSong = (parsedSong) => {
+    setSongData(parsedSong);
+    setCurrentView('viewer');
   };
 
   return (
     <>
-      <nav style={{ padding: '1rem 2rem', display: 'flex', gap: '1rem', background: 'var(--card-bg)', borderBottom: '2px solid var(--card-border)', position: 'sticky', top: 0, zIndex: 100 }}>
-        <button onClick={() => setCurrentView('hub')} style={navBtnStyle(currentView === 'hub')}>TDAHzando Hub</button>
-        <button onClick={() => setCurrentView('upload')} style={navBtnStyle(currentView === 'upload')}>Adicionar Música</button>
+      <nav style={{ padding: '1rem 2rem', display: 'flex', gap: '1rem', background: 'var(--card-bg)', borderBottom: '2px solid var(--card-border)', position: 'sticky', top: 0, zIndex: 100, alignItems: 'center' }}>
+        <button onClick={() => setCurrentView('hub')} style={navBtnStyle(currentView === 'hub')}>Hub</button>
+        <button onClick={() => setCurrentView('library')} style={navBtnStyle(currentView === 'library')}>Minhas Músicas</button>
+        <button onClick={() => setCurrentView('add')} style={navBtnStyle(currentView === 'add')}>Adicionar Música</button>
+        
         {songData && (
-          <button onClick={() => setCurrentView('viewer')} style={navBtnStyle(currentView === 'viewer')}>Visualizando: {songData.title}</button>
+          <>
+            <div style={{ width: '2px', height: '30px', background: 'var(--card-border)', margin: '0 1rem' }} />
+            <button onClick={() => setCurrentView('viewer')} style={navBtnStyle(currentView === 'viewer')}>Visualizando: {songData.title}</button>
+            <select value={viewMode} onChange={(e) => setViewMode(e.target.value)} style={{ padding: '0.5rem', borderRadius: '8px', background: 'var(--bg-color)', color: 'var(--text-primary)', border: '2px solid var(--card-border)', marginLeft: 'auto' }}>
+              <option value="sync">Modo Timeline (Avançar)</option>
+              <option value="survival">Modo Kit Sobrevivência</option>
+            </select>
+          </>
         )}
       </nav>
 
-      <main style={{ padding: '2rem' }}>
+      <main style={{ padding: '2rem', maxWidth: '1200px', margin: '0 auto' }}>
         {currentView === 'hub' && <TDAHzandoHub />}
         
-        {currentView === 'upload' && (
+        {currentView === 'library' && (
+          <div>
+            <h2 style={{ marginBottom: '2rem', color: 'var(--text-primary)' }}>Minha Biblioteca de Cifras</h2>
+            <Library onSelectSong={handleSelectSong} />
+          </div>
+        )}
+
+        {currentView === 'add' && (
           <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-            <div style={{ background: 'var(--card-bg)', padding: '2rem', borderRadius: '12px', border: '2px solid var(--card-border)' }}>
-              <h2 style={{ marginBottom: '0.5rem' }}>Carregar Cifra (Padrão CifraClub)</h2>
-              <p style={{ color: 'var(--text-secondary)', marginBottom: '2rem' }}>
-                Envie um arquivo .txt com a cifra formatada e o dicionário de acordes no final. O sistema vai extrair a música e gerar os diagramas automaticamente.
-              </p>
-              
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                <div>
-                  <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>1. Escolha o Modo de Estudo:</label>
-                  <select value={viewMode} onChange={(e) => setViewMode(e.target.value)} style={{ width: '100%', padding: '0.8rem', borderRadius: '8px', background: 'var(--bg-color)', color: 'var(--text-primary)', border: '2px solid var(--card-border)', fontSize: '1rem' }}>
-                    <option value="sync">Modo: Respeitar meu tempo (Espaço para avançar timeline)</option>
-                    <option value="survival">Modo: Kit Sobrevivência (Praticar posições antes)</option>
-                  </select>
-                </div>
-                
-                <div>
-                  <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>2. Envie o Arquivo:</label>
-                  <input type="file" accept=".txt" onChange={handleFileUpload} style={{ width: '100%', padding: '1rem', border: '2px dashed var(--card-border)', borderRadius: '8px', background: 'var(--bg-color)' }} />
-                </div>
-              </div>
-            </div>
+            <AddSongForm onSongAdded={() => setCurrentView('library')} />
           </div>
         )}
 
@@ -70,6 +58,7 @@ function App() {
     </>
   );
 }
+
 
 const navBtnStyle = (active) => ({
   background: active ? 'var(--text-primary)' : 'transparent',

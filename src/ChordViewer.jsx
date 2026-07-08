@@ -76,6 +76,18 @@ const ChordViewer = ({ songData, language = 'PT', mode = 'sync' }) => {
           <span className="badge difficulty">{songData.difficulty}</span>
           <span className="badge score">Score: {songData.difficultyScore}</span>
         </div>
+        
+        {/* Novos Controles de Mídia */}
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem', marginTop: '1.5rem' }}>
+          {songData.audioUrl && (
+            <audio controls src={songData.audioUrl} style={{ width: '100%', maxWidth: '400px', borderRadius: '8px' }} />
+          )}
+          {songData.youtubeLink && (
+            <a href={songData.youtubeLink} target="_blank" rel="noreferrer" style={{ color: '#ef4444', fontWeight: 'bold', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              ▶ Assistir Referência no YouTube
+            </a>
+          )}
+        </div>
       </header>
 
       {mode === 'survival' ? (
