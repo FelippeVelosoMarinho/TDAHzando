@@ -126,7 +126,7 @@ export default function TDAHzandoHub({ onAppSelect }) {
 
         </div>
       </section>
-
+{/* 
       <section className="input-section">
           <form id="idea-form" onSubmit={handleSubmit}>
               <div className="input-wrapper">
@@ -158,8 +158,8 @@ export default function TDAHzandoHub({ onAppSelect }) {
                   </label>
               </div>
           </form>
-      </section>
-
+      </section> */}
+{/* 
       <section className="ideas-grid" id="ideas-grid">
         {ideas.map((idea, index) => (
           <div key={idea.id} className={`idea-card ${idea.status}`} style={{ animationDelay: `${index * 0.1}s` }}>
@@ -172,7 +172,7 @@ export default function TDAHzandoHub({ onAppSelect }) {
               </div>
           </div>
         ))}
-      </section>
+      </section> */}
     </div>
   );
 }
