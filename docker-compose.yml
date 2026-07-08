@@ -45,7 +45,7 @@ services:
 
   lume-cad-frontend:
     build:
-      context: ./apps/NeuralCAD-Architec
+      context: ./apps/NeuralCAD-Architec/services/web
     restart: unless-stopped
     networks:
       - lume-network
