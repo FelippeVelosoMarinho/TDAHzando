@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile.frontend
     ports:
-      - "80:80"
+      - "49152:80"
     depends_on:
       - lume-chaos-backend
     restart: unless-stopped

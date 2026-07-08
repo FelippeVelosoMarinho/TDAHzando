@@ -11,9 +11,9 @@ function App() {
   const apps = {
     'hub': { name: 'Lume Chaos', icon: <FiLayers />, type: 'internal' },
     'chords': { name: 'Lume Chords', icon: <FaGuitar />, type: 'internal' },
-    'maps': { name: 'Lume Maps', icon: <FiMap />, type: 'iframe', url: 'http://localhost:5174' },
-    'hair': { name: 'Lume Hair', icon: <GiScissors />, type: 'iframe', url: 'http://localhost:5175' },
-    'cad': { name: 'Lume Cad', icon: <FaDraftingCompass />, type: 'iframe', url: 'http://localhost:5176' }
+    'maps': { name: 'Lume Maps', icon: <FiMap />, type: 'iframe', url: '/maps/' },
+    'hair': { name: 'Lume Hair', icon: <GiScissors />, type: 'iframe', url: '/hair/' },
+    'cad': { name: 'Lume Cad', icon: <FaDraftingCompass />, type: 'iframe', url: '/cad/' }
   };
 
   const activeApp = apps[currentApp];
