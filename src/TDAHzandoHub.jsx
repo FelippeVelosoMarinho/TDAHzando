@@ -57,6 +57,8 @@ export default function TDAHzandoHub({ onAppSelect }) {
                 <FiLayers /> Lume Chaos
               </h1>
               <p>O repositório oficial das ideias não testadas e laboratório central do ecossistema <strong>Lume</strong>.</p>
+              <p>Can you feel the light, inside, can u feel that fireeee oooooooooo</p>
+              <p></p>
           </div>
       </header>
 
